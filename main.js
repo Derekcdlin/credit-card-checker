@@ -94,12 +94,3 @@ for(let i = 0; i < batch.length; i++){
 
 console.log(findInvalidCards(batch));
 console.log(idInvalidCardCompanies(findInvalidCards(batch2)));
-
-
-
-
-
-
-
-
-
