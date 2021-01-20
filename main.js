@@ -25,6 +25,16 @@ const batch2 = [valid1, valid2, valid3, invalid1, invalid3, mystery3];
 
 
 // Add your functions below:
+const convertStringToCred = (string) =>{
+    let arr = [];
+
+    for(let i = 0; i < string.length; i++){
+        arr.push(parseInt(string[i],10));
+    }
+
+    return arr;
+}
+
 const validateCred = (arr) =>{
     let sum = 0;
     for(let i = 0; i < arr.length; i++){
@@ -62,8 +72,7 @@ const idInvalidCardCompanies = (arr) =>{
 
     for(let i = 0; i < arr.length; i++){
         let company = '';
-        console.log(arr[i][0]);
-
+        //console.log(arr[i][0]);
         switch (arr[i][0]){
             case 3:
                 company = 'Amex (American Express)';
@@ -78,7 +87,7 @@ const idInvalidCardCompanies = (arr) =>{
                 company = 'Discover';
                 break;
         }
-        console.log(company);
+        //console.log(company);
         if(!ret_arr.includes(company)){
             ret_arr.push(company);
         }
@@ -87,10 +96,43 @@ const idInvalidCardCompanies = (arr) =>{
     return ret_arr;
 }
 
-//testing
-for(let i = 0; i < batch.length; i++){
-    console.log(validateCred(batch[i]));
+const invalidToValid = (arr) =>{
+    let sum = 0;
+    for(let i = 0; i < arr.length; i++){
+        if(i%2 == 0){
+            sum += arr[arr.length-i-1];
+        }
+        else{
+            let double = arr[arr.length-i-1] * 2;
+            sum += double;
+            if(double > 9){
+                sum -= 9;
+            }
+        }
+    }
+    const mod = sum%10;
+    arr[arr.length-1] -= mod;    
+    if(arr[arr.length-1]< 0){
+        arr[arr.length-1] += 10;
+    }
+    return arr;
 }
 
-console.log(findInvalidCards(batch));
+//testing
+
+batch.forEach(arr => console.log(validateCred(arr)));
+
+//console.log(findInvalidCards(batch));
 console.log(idInvalidCardCompanies(findInvalidCards(batch2)));
+
+const arr1 = convertStringToCred("4532352406111017");
+const arr2 = convertStringToCred("5195282680003017");
+const arr3 = convertStringToCred("6011197590729206");
+const arr4 = convertStringToCred("3540660123128771");
+const batch3 = [arr1, arr2, arr3, arr4];
+
+batch3.forEach(arr => console.log(validateCred(batch3)));
+
+console.log(idInvalidCardCompanies(batch3));
+
+batch.forEach(arr => console.log(validateCred(invalidToValid(arr))));
